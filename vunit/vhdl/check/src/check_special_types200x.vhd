@@ -32,6 +32,9 @@ package check_special_types_pkg is
     procedure disable_pass_msg (
       constant handler : in log_handler_t);
 
+    impure function pass_msg_enabled
+      return boolean;
+
     procedure check(expr         :    boolean;
                     msg          :    string;
                     level        :    log_level_t := dflt;
@@ -113,6 +116,12 @@ package body check_special_types_pkg is
         pass_file_filter_inactive := false;
         logger.add_filter(pass_file_filter, (1 => pass_level), "", false, (1 => file_handler));
       end if;
+    end;
+
+    impure function pass_msg_enabled
+      return boolean is
+    begin
+      return pass_display_filter_inactive or pass_file_filter_inactive;
     end;
 
     procedure check(expr         :    boolean;

@@ -57,6 +57,15 @@ package body check_base_pkg is
     -- pragma translate_on
   end;
 
+  procedure base_pass_msg_enabled (
+    variable checker : inout checker_t;
+    variable en : out boolean) is
+  begin
+    -- pragma translate_off
+    en := checker.pass_msg_enabled;
+    -- pragma translate_on
+  end;
+
   procedure base_check(
     variable checker       : inout checker_t;
     constant expr         : in    boolean;

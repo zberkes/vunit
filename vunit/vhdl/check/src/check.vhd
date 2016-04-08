@@ -39,11 +39,23 @@ package body check_pkg is
     return string is
   begin
     if msg = "" then
-      return what_failed & " failed! Got " & got & ". Expected " & expected & ".";
+      return "Got " & got & ". Expected " & expected & ".";
     else
-      return what_failed & " failed! Got " & got & ". Expected " & expected & ". " & msg;
+      return msg & " - Got " & got & ". Expected " & expected & ".";
     end if;
   end function failed_expectation_msg;
+
+  function passed_expectation_msg (
+    constant got         : string;
+    constant msg         : string := "")
+    return string is
+  begin
+    if msg = "" then
+      return "Got " & got & ".";
+    else
+      return msg & " - Got " & got & ".";
+    end if;
+  end function passed_expectation_msg;
 
   procedure checker_init (
     constant default_level  : in log_level_t  := error;
@@ -1963,11 +1975,19 @@ package body check_pkg is
     constant level           : in log_level_t := dflt;
     constant line_num        : in natural     := 0;
     constant file_name       : in string      := "") is
+    variable en : boolean;
   begin
     -- pragma translate_off
     if got = expected then
       pass := true;
-      check_passed(checker, msg, line_num, file_name);
+      base_pass_msg_enabled(checker, en);
+      if en then
+        check_passed(checker,
+                     passed_expectation_msg(to_nibble_string(got) & " (" & to_integer_string(got) & ")", msg),
+                     line_num, file_name);
+      else
+        check_passed(checker, msg, line_num, file_name);
+      end if;
     else
       pass := false;
       check_failed(checker,

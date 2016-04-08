@@ -35,6 +35,10 @@ package check_base_pkg is
     variable checker : inout checker_t;
     constant handler : in log_handler_t);
 
+  procedure base_pass_msg_enabled (
+    variable checker : inout checker_t;
+    variable en : out boolean);
+
   procedure base_check(
     variable checker       : inout checker_t;
     constant expr         : in    boolean;

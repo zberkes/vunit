@@ -70,6 +70,13 @@ package body check_base_pkg is
     -- pragma translate_on
   end;
 
+  procedure base_pass_msg_enabled (
+    variable checker : inout checker_t;
+    variable en : out boolean) is
+  begin
+    en := checker.pass_display_filter_inactive or checker.pass_file_filter_inactive;
+  end;
+
   procedure base_check(
     variable checker   : inout checker_t;
     constant expr      : in      boolean;

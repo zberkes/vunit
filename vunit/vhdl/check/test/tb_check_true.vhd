@@ -18,7 +18,7 @@ use vunit_lib.run_base_pkg.all;
 use vunit_lib.run_pkg.all;
 use work.test_support.all;
 use work.test_count.all;
-
+use ieee.numeric_std.all;
 entity tb_check_true is
   generic (
     runner_cfg : runner_cfg_t := runner_cfg_default);
@@ -98,6 +98,10 @@ begin
         check_true(check_true_checker, pass, true);
         counting_assert(pass, "Should return pass = true on passing check");
         verify_passed_checks(check_true_checker, stat, 2);
+      elsif run("Test performance") then
+        for i in 1 to 100000000 loop
+          check_equal(unsigned'("10001"), 17, "Checking");
+        end loop;  -- i
       elsif run("Test pass message") then
         enable_pass_msg;
         check_true(true, "Checking");

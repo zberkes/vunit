@@ -24,6 +24,5 @@ class TestPep8(unittest.TestCase):
         check_call([sys.executable, "-m", "pep8",
                     "--show-source",
                     "--show-pep8",
-                    "--max-line-length=120",
-                    "--ignore=E402",
+                    "--config=" + join(ROOT, "setup.cfg"),
                     join(ROOT, "vunit")])

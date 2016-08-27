@@ -11,7 +11,7 @@ Pylint check
 
 import unittest
 from subprocess import check_call
-from os.path import join, dirname
+from os.path import join
 import sys
 from vunit import ROOT
 
@@ -23,5 +23,5 @@ class TestPylint(unittest.TestCase):
     @staticmethod
     def test_pylint():
         check_call([sys.executable, "-m", "pylint",
-                    "--rcfile=" + join(dirname(__file__), "pylintrc"),
+                    "--rcfile=" + join(ROOT, "pylintrc"),
                     join(ROOT, "vunit")])

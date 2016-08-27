@@ -1,0 +1,11 @@
+ignore-paths:
+  - examples
+ignore-patterns:
+  - (^|/).*run\.py(/|$)
+strictness: veryhigh
+member-warnings: true
+test-warnings: true
+pyflakes:
+  run: false
+pep8:
+  full: true

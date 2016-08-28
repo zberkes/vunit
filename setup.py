@@ -4,6 +4,10 @@
 #
 # Copyright (c) 2015-2016, Lars Asplund lars.anders.asplund@gmail.com
 
+"""
+VUnit setup file.
+"""
+
 from setuptools import setup
 from vunit.about import version, doc
 from vunit.builtins import osvvm_is_installed

@@ -4,6 +4,9 @@
 #
 # Copyright (c) 2016, Lars Asplund lars.anders.asplund@gmail.com
 
+"""
+This script is use by Travis to (referenced in .travis.yml) initiate VUnit unit tests.
+"""
 from subprocess import check_call
 import sys
 

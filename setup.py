@@ -15,7 +15,7 @@ def find_all_files(directory, endings=None):
     Recursively find all files within directory
     """
     result = []
-    for root, dirnames, filenames in os.walk(directory):
+    for root, _, filenames in os.walk(directory):
         for filename in filenames:
             ending = os.path.splitext(filename)[-1]
             if endings is None or ending in endings:
@@ -62,7 +62,7 @@ setup(
     long_description=doc())
 
 if not osvvm_is_installed():
-         warning("""
+    warning("""
 Found no OSVVM VHDL files. If you're installing from a Git repository and plan to use VUnit's integration
 of OSVVM you should run
 

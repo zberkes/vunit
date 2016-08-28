@@ -28,11 +28,10 @@ def find_all_files(directory, endings=None):
                 print("Ignoring %s" % filename)
     return result
 
-data_files = []
-data_files += find_all_files(os.path.join('vunit', 'vhdl'))
-data_files += find_all_files(os.path.join('vunit', 'verilog'),
-                             endings=[".v", ".sv", ".svh"])
-data_files = [os.path.relpath(file_name, 'vunit') for file_name in data_files]
+VHDL_DATA_FILES = find_all_files(os.path.join('vunit', 'vhdl'))
+VERILOG_DATA_FILES = find_all_files(os.path.join('vunit', 'verilog'),
+                                    endings=[".v", ".sv", ".svh"])
+DATA_FILES = [os.path.relpath(file_name, 'vunit') for file_name in VHDL_DATA_FILES + VERILOG_DATA_FILES]
 
 setup(
     name='vunit_hdl',
@@ -45,7 +44,7 @@ setup(
               'vunit.test.lint',
               'vunit.test.unit',
               'vunit.test.acceptance'],
-    package_data={'vunit': data_files},
+    package_data={'vunit': DATA_FILES},
     zip_safe=False,
     url='https://github.com/VUnit/vunit',
     classifiers=['Development Status :: 5 - Production/Stable',

@@ -5,6 +5,8 @@ ignore-patterns:
 strictness: veryhigh
 member-warnings: true
 test-warnings: true
+pyroma:
+  run: true
 pyflakes:
   run: false
 mccabe:

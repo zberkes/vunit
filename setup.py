@@ -9,7 +9,7 @@ VUnit setup file.
 """
 
 from setuptools import setup
-from vunit.about import version, doc
+from vunit.about import version, doc, license_text
 from vunit.builtins import osvvm_is_installed
 import os
 from logging import warning
@@ -36,6 +36,7 @@ DATA_FILES = [os.path.relpath(file_name, 'vunit') for file_name in VHDL_DATA_FIL
 setup(
     name='vunit_hdl',
     version=version(),
+    license=license_text(),
     packages=['vunit',
               'vunit.com',
               'vunit.test',
@@ -59,6 +60,8 @@ setup(
                  'Operating System :: MacOS :: MacOS X',
                  'Operating System :: POSIX :: Linux',
                  'Topic :: Software Development :: Testing'],
+    keywords='unit testing, VHDL, SystemVerilog',
+    test_suite = 'vunit.test.run_tests',
     author='Lars Asplund',
     author_email='lars.anders.asplund@gmail.com',
     description="VUnit is an open source unit testing framework for VHDL/SystemVerilog.",

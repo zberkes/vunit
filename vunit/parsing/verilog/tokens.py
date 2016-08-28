@@ -11,14 +11,14 @@ Verilog tokens
 from vunit.parsing.tokenizer import new_token_kind
 
 
-def __token(kind):
+def __token(kind):  # nopep8
     """
     Create non keyword token kind
     """
     return new_token_kind(kind)
 
 
-def __keyword(kind):
+def __keyword(kind):  # nopep8
     """
     Create keyword token kind
     """

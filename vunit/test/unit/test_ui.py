@@ -640,7 +640,7 @@ end architecture;
         with open(file_name, "w") as fptr:
             fptr.write(contents)
 
-    def assertRaisesRegex(self, *args, **kwargs):  # pylint: disable=invalid-name
+    def assertRaisesRegex(self, *args, **kwargs):  # nopep8  # pylint: disable=invalid-name
         """
         Python 2/3 compatability
         """

@@ -7,5 +7,7 @@ member-warnings: true
 test-warnings: true
 pyflakes:
   run: false
+mccabe:
+  run: false
 pep8:
   full: true

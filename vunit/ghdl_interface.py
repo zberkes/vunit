@@ -47,6 +47,9 @@ class GHDLInterface(SimulatorInterface):
         group.add_argument("--gtkwave", choices=["vcd", "ghw"],
                            default=None,
                            help="Save .vcd or .ghw and open in gtkwave")
+        group.add_argument("--gtkwave-open", action='store_true',
+                           default=False,
+                           help="Open generated .vcd or .ghw file in GtkWave.")
         group.add_argument("--gtkwave-args",
                            default="",
                            help="Arguments to pass to gtkwave")
@@ -61,6 +64,7 @@ class GHDLInterface(SimulatorInterface):
         prefix = cls.find_prefix()
         return cls(prefix=prefix,
                    gtkwave=args.gtkwave,
+                   gtkwave_open=args.gtkwave_open,
                    gtkwave_args=args.gtkwave_args,
                    backend=cls.determine_backend(prefix))
 
@@ -71,15 +75,16 @@ class GHDLInterface(SimulatorInterface):
         """
         return cls.find_toolchain(["ghdl"])
 
-    def __init__(self, prefix, gtkwave=None, gtkwave_args="", backend="llvm"):
+    def __init__(self, prefix, gtkwave=None, gtkwave_open=False, gtkwave_args="", backend="llvm"):
         self._prefix = prefix
         self._libraries = {}
         self._vhdl_standard = None
 
-        if gtkwave is not None and len(self.find_executable('gtkwave')) == 0:
+        if gtkwave is not None and gtkwave_open and len(self.find_executable('gtkwave')) == 0:
             raise RuntimeError("Cannot find the gtkwave executable in the PATH environment variable.")
 
         self._gtkwave = gtkwave
+        self._gtkwave_open = gtkwave_open
         self._gtkwave_args = gtkwave_args
         self._backend = backend
 
@@ -178,7 +183,7 @@ class GHDLInterface(SimulatorInterface):
         if not exists(ghdl_output_path):
             os.makedirs(ghdl_output_path)
 
-        launch_gtkwave = self._gtkwave is not None and not elaborate_only
+        generate_gtkwave = self._gtkwave is not None and not elaborate_only
 
         status = True
         try:
@@ -206,7 +211,7 @@ class GHDLInterface(SimulatorInterface):
             if elaborate_only:
                 cmd += ["--no-run"]
 
-            if launch_gtkwave:
+            if generate_gtkwave:
                 if exists(data_file_name):
                     os.remove(data_file_name)
                 if self._gtkwave == "ghw":
@@ -219,7 +224,7 @@ class GHDLInterface(SimulatorInterface):
         except Process.NonZeroExitCode:
             status = False
 
-        if launch_gtkwave:
+        if generate_gtkwave and self._gtkwave_open:
             cmd = ["gtkwave"] + shlex.split(self._gtkwave_args) + [data_file_name]
             stdout.write("%s\n" % " ".join(cmd))
             subprocess.call(cmd)
